@@ -49,6 +49,7 @@ public class AdapterRepo extends RecyclerView.Adapter<AdapterRepo.ViewHolder> {
             @Override
             public void onClick(View v) {
                 viewImpl.showRepoDetail(repoDetails.get(i).getRepoUpdateDate(), repoDetails.get(i).getRepoStarCount(), repoDetails.get(i).getForksCount());
+
             }
         });
     }

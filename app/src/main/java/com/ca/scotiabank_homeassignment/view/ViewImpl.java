@@ -6,11 +6,14 @@ import java.util.ArrayList;
 
 public interface ViewImpl {
 
-    void showRepositories(String repoUserName);
+    void showError(Throwable error);
+
+    void loadRepositories(RepoDetail repoDetails);
 
     void showRepoUserPicture(String pictureUrl);
 
     void showWarning(String warning);
 
     void showRepoDetail(String updateDate, int starCount, int forksCount);
+
 }

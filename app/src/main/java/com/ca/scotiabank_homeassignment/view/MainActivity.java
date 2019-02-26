@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,13 +45,9 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
 
     @BindView(R.id.parentLayout)
     ConstraintLayout parentLayout;
-    //@BindView(R.id.etSearch)
     EditText etSearch;
-    // @BindView(R.id.btnSearch)
     Button btnSearch;
-    //@BindView(R.id.imgUserPicture)
     ImageView imgUserPicture;
-    //@BindView(R.id.listRepo)
     RecyclerView listViewRepo;
 
     private PresenterClass presenter;
@@ -67,54 +64,33 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
 
     private void initViews() {
         etSearch = (EditText) findViewById(R.id.etSearch);
-        // btnSearch = (Button)findViewById(R.id.btnSearch);
         imgUserPicture = (ImageView) findViewById(R.id.imgUserPicture);
         listViewRepo = (RecyclerView) findViewById(R.id.listRepo);
 
         findViewById(R.id.btnSearch).setOnClickListener(this);
+
     }
 
 
     @Override
-    public void showRepositories(String repoUserName) {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put(":", repoUserName);
+    public void loadRepositories(RepoDetail repoDetails) {
 
-        RetroClient.getApiService().getGithubUserRepositores("user", repoUserName).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RepoDetail>() {
-                    @Override
-                    public void onCompleted() {
+        imgUserPicture.setVisibility(View.VISIBLE);
+        listViewRepo.setVisibility(View.VISIBLE);
 
-                    }
+        listViewRepo.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+        listViewRepo.setAdapter(new AdapterRepo(MainActivity.this, repoDetails.getRepoItems()));
+        listViewRepo.setHasFixedSize(true);
+        listViewRepo.setItemViewCacheSize(20);
+        listViewRepo.setDrawingCacheEnabled(true);
+        listViewRepo.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        listViewRepo.getAdapter().notifyDataSetChanged();
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("error_hap", e.getMessage());
-                    }
+    }
 
-                    @Override
-                    public void onNext(RepoDetail repoDetails) {
-                        if (repoDetails != null) {
-
-                            imgUserPicture.setVisibility(View.VISIBLE);
-                            listViewRepo.setVisibility(View.VISIBLE);
-
-                            listViewRepo.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
-                            listViewRepo.setAdapter(new AdapterRepo(MainActivity.this, repoDetails.getRepoItems()));
-                            listViewRepo.setHasFixedSize(true);
-                            listViewRepo.setItemViewCacheSize(20);
-                            listViewRepo.setDrawingCacheEnabled(true);
-                            listViewRepo.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-                            showRepoUserPicture(repoDetails.getRepoOwner().getRepoOwnerImageUrl());
-                        } else {
-
-                            presenter.loadRepositories("");
-                        }
-                    }
-                });
-
+    @Override
+    public void showError(Throwable t) {
+        Log.e("error_hap", t.getMessage());
     }
 
     @Override
@@ -144,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSearch:
-                presenter.loadRepositories(etSearch.getText().toString());
+                presenter.searchRepositories(etSearch.getText().toString());
                 break;
         }
     }

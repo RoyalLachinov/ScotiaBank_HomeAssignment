@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetroClient {
 
 
-    private static final String ROOT_URL = "https://api.github.com/search/";
+    private static final String ROOT_URL = "http://api.github.com/search/";
 
 
     private static Retrofit getRetrofitInstance() {

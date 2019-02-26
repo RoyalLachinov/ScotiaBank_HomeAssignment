@@ -20,5 +20,5 @@ import rx.Observable;
 public interface ApiService {
 
     @GET("repositories")
-    Observable<RepoDetail> getGithubUserRepositores(@Query("q") String search, @Query(":")String body);
+    Observable<RepoDetail> getGithubUserRepositores(@Query("q") String search);
 }

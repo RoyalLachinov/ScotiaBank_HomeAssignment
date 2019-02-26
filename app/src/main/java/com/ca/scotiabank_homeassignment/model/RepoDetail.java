@@ -11,23 +11,12 @@ public class RepoDetail {
     @SerializedName("items")
     ArrayList<RepoItem>repoItems;
 
-    @SerializedName("owner")
-    RepoOwner repoOwner;
-
     public ArrayList<RepoItem> getRepoItems() {
         return repoItems;
     }
 
     public void setRepoItems(ArrayList<RepoItem> repoItems) {
         this.repoItems = repoItems;
-    }
-
-    public RepoOwner getRepoOwner() {
-        return repoOwner;
-    }
-
-    public void setRepoOwner(RepoOwner repoOwner) {
-        this.repoOwner = repoOwner;
     }
 
     public class RepoItem {
@@ -42,7 +31,8 @@ public class RepoDetail {
         private int repoStarCount;
         @SerializedName("forks_count")
         private int forksCount;
-
+        @SerializedName("owner")
+        RepoOwner repoOwner;
 
         public String getRepoName() {
             return repoName;
@@ -83,6 +73,15 @@ public class RepoDetail {
         public void setForksCount(int forksCount) {
             this.forksCount = forksCount;
         }
+
+        public RepoOwner getRepoOwner() {
+            return repoOwner;
+        }
+
+        public void setRepoOwner(RepoOwner repoOwner) {
+            this.repoOwner = repoOwner;
+        }
+
     }
 
 
