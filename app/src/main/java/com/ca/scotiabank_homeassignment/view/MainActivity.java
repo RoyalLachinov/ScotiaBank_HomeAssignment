@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
 
     @Override
     public void showWarning(String warning) {
-        Toast.makeText(MainActivity.this, warning, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, warning, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
 
         Toast.makeText(this, "Last Updated: " + updateDate + "\n" +
                 "Stars:  " + starCount + "\n" +
-                "Forks:  " + forksCount, Toast.LENGTH_SHORT).show();
+                "Forks:  " + forksCount, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements ViewImpl, View.On
 
         Glide.with(imgUserPicture.getContext())
                 .load(pictureUrl)
-                .fitCenter()
                 .into(imgUserPicture);
 
     }
