@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ScotiaBank_HomeAssignment</string>
+    <string name="search_by_user_id">Enter a github user id</string>
+    <string name="search">Search</string>
+</resources>
